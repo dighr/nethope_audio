@@ -1,6 +1,8 @@
 import re
 import time
-import src.google_transcription as gt
+import src.google_service as gs
+from pydub import AudioSegment
+import src.utils as util
 
 
 # For the given name NO extension, extract the timestamp portion and store it in epoch format
@@ -24,11 +26,16 @@ def extract_info_from_name(name):
 
 
 # Transcribe and then translate the audio
-def transcribe_and_translate(file_loc, source_lang_code, target_lang_code):
-    gt_obj = gt.GoogleTranscription(source_lang_code)
-    transcription = gt_obj.transcribe(file_loc)
+def transcribe_and_translate(file_name, source_lang_code, target_lang_code):
+    sound = AudioSegment.from_file(file_name, format=file_name.split('.')[-1])
+    duration = sound.duration_seconds
+    type = 'short' if duration < 60 else 'long'
+    transcription = gs.transcribe_audio(file_name, source_lang_code, type)
     print(transcription)
-    translation = gt.translate_text_from(transcription, source_lang_code.split("-")[0], 'ar')
+    
+    text = util.transcript_response_to_paragraph(transcription)
+    translation = gs.translate_text_from(text, source_lang_code.split("-")[0], target_lang_code)
+    print(translation)
     return transcription, translation
 
 # Store the given params into the db
@@ -36,6 +43,4 @@ def store_in_db(epoche, phone_num, transcription, translation):
     pass
 
 
-print(transcribe_and_translate('../data/example.wav', 'en', 'ar'))
-
-
+transcribe_and_translate('../data/example2.wav', 'en', 'ar')

@@ -5,3 +5,4 @@ google-cloud-translate
 google-api-python-client
 pydub
 SpeechRecognition
+google-cloud-storage
