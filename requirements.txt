@@ -1,0 +1,7 @@
+google
+google-cloud-language
+google-cloud-speech
+google-cloud-translate
+google-api-python-client
+pydub
+SpeechRecognition
