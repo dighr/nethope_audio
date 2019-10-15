@@ -1,14 +1,11 @@
 '''
-This python class uses google's transcription and translation API to transcribe audios.
-There are different methods within this class to translate and get sentiment values of texts
-To use this class, ensure that the "" is within the environment
+This python script uses google's transcription and translation API to transcribe and translate audios.
 '''
 
 import io
 from google.cloud.speech import enums as speech_enums
 from google.cloud.speech import types as speech_types
 from google.cloud import speech
-from pydub import AudioSegment
 from google.cloud import translate
 from google.cloud import storage
 import src.utils as util
