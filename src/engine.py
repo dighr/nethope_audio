@@ -31,16 +31,10 @@ def transcribe_and_translate(file_name, source_lang_code, target_lang_code):
     duration = sound.duration_seconds
     type = 'short' if duration < 60 else 'long'
     transcription = gs.transcribe_audio(file_name, source_lang_code, type)
-    print(transcription)
-    
     text = util.transcript_response_to_paragraph(transcription)
     translation = gs.translate_text_from(text, source_lang_code.split("-")[0], target_lang_code)
-    print(translation)
     return transcription, translation
 
-# Store the given params into the db
+# TODO Store the given params into the db
 def store_in_db(epoche, phone_num, transcription, translation):
     pass
-
-
-transcribe_and_translate('../data/example2.wav', 'en', 'ar')
