@@ -1,7 +1,6 @@
 import re
 import time
 import src.google_service as gs
-from pydub import AudioSegment
 import src.utils as util
 
 
@@ -27,10 +26,7 @@ def extract_info_from_name(name):
 
 # Transcribe and then translate the audio
 def transcribe_and_translate(file_name, source_lang_code, target_lang_code):
-    sound = AudioSegment.from_file(file_name, format=file_name.split('.')[-1])
-    duration = sound.duration_seconds
-    type = 'short' if duration < 60 else 'long'
-    transcription = gs.transcribe_audio(file_name, source_lang_code, type)
+    transcription = gs.transcribe_audio(file_name, source_lang_code)
     text = util.transcript_response_to_paragraph(transcription)
     translation = gs.translate_text_from(text, source_lang_code.split("-")[0], target_lang_code)
     return transcription, translation

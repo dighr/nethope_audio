@@ -18,10 +18,10 @@ import ntpath
 
 # Transcription
 # trascribe audios
-def transcribe_audio(file_path, language_code, type='short'):
-    new_path, frame_rate, channels = util.pre_process_audio(file_path)
+def transcribe_audio(file_path, language_code):
+    duration, new_path, frame_rate, channels = util.pre_process_audio(file_path)
     # Detects speech in the audio file
-    if type == 'short':
+    if duration < 60:
         response = transcribe_short(new_path, frame_rate, language_code)
     else:
         response = transcribe_large(new_path, frame_rate, language_code)
@@ -42,7 +42,7 @@ def transcribe_short(file_path, frame_rate, language_code):
 
     config = speech_types.RecognitionConfig(
         encoding=speech_enums.RecognitionConfig.AudioEncoding.LINEAR16,
-        frame_rate=frame_rate,
+        sample_rate_hertz=frame_rate,
         language_code=language_code)
 
     response = client.recognize(config, audio)

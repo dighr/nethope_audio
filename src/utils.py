@@ -12,17 +12,20 @@ def convert_to_wav(audio_file_name):
 
     file_name_without_extension = ntpath.basename(audio_file_name).split('.')[0]
     if extension == 'wav':
-        return audio_file_name
+        sound = AudioSegment.from_wav(audio_file_name)
+        return sound.duration_seconds, audio_file_name
 
-    if extension == 'mp3':
+    elif extension == 'mp3':
         sound = AudioSegment.from_mp3(audio_file_name)
-        sound.export(audio_file_name, format="wav")
 
-    if extension == 'amr':
+    # AMR at this point
+    else:
         sound = AudioSegment.from_file(audio_file_name, format='amr')
-        sound.export(audio_file_name, format="wav")
 
-    return ntpath.dirname(audio_file_name).join((file_name_without_extension + '.wav'))
+    sound.export(audio_file_name, format="wav")
+    duration = sound.duration_seconds
+
+    return duration, ntpath.dirname(audio_file_name).join((file_name_without_extension + '.wav'))
 
 
 # the input file name has to be a  wav audio file
@@ -49,9 +52,9 @@ def transcript_response_to_paragraph(response):
 
 def pre_process_audio(full_audio_name):
     # preprocess
-    path = convert_to_wav(full_audio_name)
+    duration, path = convert_to_wav(full_audio_name)
     frame_rate, channels = frame_rate_channel(full_audio_name)
     if channels > 1:
         stereo_to_mono(full_audio_name)
 
-    return path, frame_rate, channels
+    return duration, path, frame_rate, channels
