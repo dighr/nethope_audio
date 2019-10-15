@@ -28,6 +28,8 @@ virtualenv env
   ````
   pip install -r requirements.txt
   ````
+- Add GOOGLE_APPLICATION_CREDENTIALS environment variable file. This variable links to the json file
+ containing the private key for google cloud
 
 ## Current Data Collection Process
 1. Interviewer calls remote interviewee
