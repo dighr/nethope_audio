@@ -25,7 +25,7 @@ SECRET_KEY = '6xxk%%z1ii*9%j(a-8p63(l&v$fb2de1w2fl24b(@rxzgcpk-8'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['nethope-pr-assessment.appspot.com']
+ALLOWED_HOSTS = ['nethope-pr-assessment.appspot.com', '127.0.0.1']
 
 
 # Application definition
@@ -49,6 +49,14 @@ CORS_ORIGIN_ALLOW_ALL = True
 #     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
 #     'PAGE_SIZE': 10
 # }
+
+REST_FRAMEWORK = {
+    # Use Django's standard `django.contrib.auth` permissions,
+    # or allow read-only access for unauthenticated users.
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.IsAuthenticated'
+    ]
+}
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
