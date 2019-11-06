@@ -31,7 +31,6 @@ ALLOWED_HOSTS = ['nethope-pr-assessment.appspot.com', '127.0.0.1']
 # Application definition
 
 INSTALLED_APPS = [
-
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -40,15 +39,11 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'audio_transcription',
     'rest_framework',
-    'corsheaders'
+    'dropbox_listener'
 ]
 
 CORS_ORIGIN_ALLOW_ALL = True
 
-# REST_FRAMEWORK = {
-#     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
-#     'PAGE_SIZE': 10
-# }
 
 REST_FRAMEWORK = {
     # Use Django's standard `django.contrib.auth` permissions,
@@ -74,7 +69,7 @@ ROOT_URLCONF = 'app_api.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(os.path.dirname(__file__), '..//', 'templates').replace('\\', '/')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -134,6 +129,9 @@ USE_TZ = True
 STATIC_URL = '/static/'
 STATIC_ROOT = './static'
 
+MEDIA_URL =  '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, "media")
+
 
 if os.getenv('GAE_APPLICATION', None):
     # Running on production App Engine, so connect to Google Cloud SQL using
@@ -159,8 +157,8 @@ else:
             'ENGINE': 'django.db.backends.mysql',
             'HOST': '127.0.0.1',
             'PORT': '5505',
-            'USER': 'admin',
-            'PASSWORD': 'admin',
+            'USER': os.environ["username"],
+            'PASSWORD': os.environ['password'],
             'NAME': 'audio_transcription',
         }
     }

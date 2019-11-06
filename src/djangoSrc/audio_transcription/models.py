@@ -8,3 +8,5 @@ class AudioFiles(models.Model):
     phonenumber = models.CharField(max_length=1000)
     transcription = models.CharField(max_length=1000)
     translation = models.CharField(max_length=1000)
+    processed = models.IntegerField()
+

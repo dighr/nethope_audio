@@ -18,6 +18,8 @@ class GroupSerializer(serializers.HyperlinkedModelSerializer):
 class AudioFilesSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = AudioFiles
-        fields = ['id', 'filename', 'timestamp', 'phonenumber', 'transcription', 'translation']
+        fields = ['id', 'filename', 'timestamp', 'phonenumber', 'transcription', 'translation', 'processed']
+        read_only_fields = ['id', 'filename', 'timestamp', 'phonenumber', 'transcription', 'translation']
+
 
 

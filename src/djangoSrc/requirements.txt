@@ -10,3 +10,6 @@ django
 djangorestframework
 django-cors-headers
 mysqlclient
+six
+pymysql
+dropbox
