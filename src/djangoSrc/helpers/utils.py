@@ -4,6 +4,8 @@ import ntpath
 import re
 import time
 import helpers.constants as const
+# from google.appengine.ext import ndb
+
 
 # For the given name NO extension, extract the timestamp portion and store it in epoch format
 # The given name comes in a similar format to the following 0c20191010155022n7879579094_0.amr
@@ -67,7 +69,7 @@ def frame_rate_channel(audio_file_name):
 def transcript_response_to_paragraph(response):
     text = ''
     for result in response.results:
-        text += result.alternatives[0].transcript + '\n'
+        text += result.alternatives[0].transcript.encode('utf-16').decode('utf-16') + '\n'
 
     return text
 
@@ -80,3 +82,10 @@ def pre_process_audio(full_audio_name):
         stereo_to_mono(path)
 
     return duration, path, frame_rate, channels
+
+
+def get_transcript(response):
+    res = []
+    for result in response.results:
+        res.append(result.alternatives[0].transcript.encode('utf-16').decode('utf-16'))
+    return res

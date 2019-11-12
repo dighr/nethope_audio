@@ -140,8 +140,8 @@ if os.getenv('GAE_APPLICATION', None):
         'default': {
             'ENGINE': 'django.db.backends.mysql',
             'HOST': '/cloudsql/nethope-pr-assessment:us-central1:nethopemysql',
-            'USER': 'admin',
-            'PASSWORD': 'admin',
+            'USER': os.environ["username"],
+            'PASSWORD': os.environ['password'],
             'NAME': 'audio_transcription',
         }
     }

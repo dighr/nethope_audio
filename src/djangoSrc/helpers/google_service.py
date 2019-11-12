@@ -61,7 +61,8 @@ def transcribe_large(full_audio_name, frame_rate, language_code):
     config = speech_types.RecognitionConfig(
         encoding=speech_enums.RecognitionConfig.AudioEncoding.LINEAR16,
         sample_rate_hertz=frame_rate,
-        language_code=language_code)
+        language_code=language_code,
+            )
 
     # Detects speech in the audio file
     operation = client.long_running_recognize(config, audio)
