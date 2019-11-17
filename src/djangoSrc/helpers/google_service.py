@@ -81,6 +81,15 @@ def upload_to_bucket(bucket_name, source_file_name, destination_blob_name):
     blob.upload_from_filename(source_file_name)
 
 
+# upload files to the specified bucket
+def read_file_from_bucket(bucket_name, file_name):
+    """return  file content in the bucket as string."""
+    storage_client = storage.Client()
+    bucket = storage_client.get_bucket(bucket_name)
+    blob = bucket.blob(ntpath.basename(file_name))
+    return blob.download_as_string()
+
+
 def delete_from_bucket(bucket_name, blob_name):
     """Deletes a blob from the bucket."""
     storage_client = storage.Client()

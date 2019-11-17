@@ -35,8 +35,8 @@ class DropBoxListener:
                     folders.append(current_path + '/' + entry.name)
                 elif isinstance(entry, FileMetadata):
                     if pathlib.Path(entry.name).suffix in constants.SUPPORTED_AUDIO_ENCODING:
-                        # if not file_exists(current_path + '/' + entry.name):
-                        self.files.append(current_path + '/' + entry.name)
+                        if not file_exists(current_path + '/' + entry.name):
+                            self.files.append(current_path + '/' + entry.name)
 
     def download_all_file(self):
         self.output_files = []
