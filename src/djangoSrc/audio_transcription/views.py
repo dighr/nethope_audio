@@ -61,6 +61,11 @@ class AudioFilesViewSet(viewsets.ModelViewSet):
     http_method_names = ['get', 'put']
 
     def list(self, request, *args, **kwargs):
+
+        value = request.query_params.get('realData')
+        if value is None:
+            return super().list(request, *args, **kwargs)
+
         queryset = self.filter_queryset(self.get_queryset())
 
         page = self.paginate_queryset(queryset)
@@ -84,7 +89,6 @@ class AudioFilesViewSet(viewsets.ModelViewSet):
 
         return Response(serializer.data)
 
-        # super().list(request, *args, *kwargs)
     def retrieve(self, request, *args, **kwargs):
         instance = self.get_object()
         serializer = self.get_serializer(instance)

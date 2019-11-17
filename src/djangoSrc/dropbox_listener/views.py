@@ -1,5 +1,4 @@
 import os
-import json
 from rest_framework import viewsets
 from rest_framework.response import Response
 from .models import DropBoxListener as dbl
@@ -7,6 +6,7 @@ from .DropBoxListener import DropBoxListener, file_exists
 from audio_transcription.models import AudioFiles
 from .serializers import DropBoxListenerSerializer
 from helpers import google_service,  utils, constants
+from threading import Thread
 
 
 # Create your views here.
@@ -27,9 +27,6 @@ class DropBoxViewSet(viewsets.ModelViewSet):
 
         return super().update(request, *args, **kwargs)
 
-
-from threading import Thread
-from time import sleep
 
 # singlton class
 class Handle:
@@ -63,6 +60,7 @@ class Handle:
                     # Send transcription request, add them to a file
                     transcript_response = google_service.transcribe_audio(file, 'es-US')
                     transcript_text = utils.get_transcript(transcript_response)
+                    print(transcript_text)
                     # Save the transcribed file in a bucket in google cloud
                     transcript_destination = self.save_to_bucket(transcript_text, files[index], constants.AUDIOS_TRANSCRIPTION)
 
@@ -70,8 +68,6 @@ class Handle:
                     paragraph = utils.transcript_response_to_paragraph(transcript_response)
                     translation = google_service.translate_text_from(paragraph, 'es', 'en')
 
-                    print(transcript_text)
-                    print(translation)
                     # Send the translation in a bucket in google cloud
                     translation_destination = self.save_to_bucket(translation, files[index], constants.AUDIOS_TRANSLATION)
 
@@ -88,8 +84,6 @@ class Handle:
 
                 except Exception as e:
                     print(e)
-            print('ending')
-
 
         # count = 0
         # while self._keep_runnning:
