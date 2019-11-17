@@ -11,6 +11,7 @@ from google.cloud import storage
 import helpers.utils as util
 import helpers.constants as const
 import ntpath
+from helpers.GCSObjectStreamUpload import GCSObjectStreamUpload
 
 
 # Transcription
@@ -75,10 +76,14 @@ def transcribe_large(full_audio_name, frame_rate, language_code):
 # upload files to the specified bucket
 def upload_to_bucket(bucket_name, source_file_name, destination_blob_name):
     """Uploads a file to the bucket."""
-    storage_client = storage.Client()
-    bucket = storage_client.get_bucket(bucket_name)
-    blob = bucket.blob(destination_blob_name)
-    blob.upload_from_filename(source_file_name)
+    client = storage.Client()
+    # bucket = storage_client.get_bucket(bucket_name)
+    # blob = bucket.blob(destination_blob_name)
+    # blob.upload_from_filename(source_file_name)
+    with GCSObjectStreamUpload(client=client, bucket_name=bucket_name, blob_name=destination_blob_name) as s:
+        file = open(source_file_name, "rb")
+        s.write(file.read())
+
 
 
 # upload files to the specified bucket

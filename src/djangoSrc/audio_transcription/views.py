@@ -110,14 +110,6 @@ class AudioFilesViewSet(viewsets.ModelViewSet):
         return Response(data)
 
 
-def get_data_from_bucket(location):
-    output = ""
-
-    gs.read_file_from_bucket()
-    return output
-
-
-
 # @api_view(['POST'])
 # def snippet_list(request):
 #     """
