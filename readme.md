@@ -28,8 +28,30 @@ virtualenv env
   ````
   pip install -r requirements.txt
   ````
-- Add GOOGLE_APPLICATION_CREDENTIALS environment variable file. This variable links to the json file
+- Add the Following to the enviroment variable 
+    - GOOGLE_APPLICATION_CREDENTIALS: This variable links links to the json file
  containing the private key for google cloud
+        * Name the file containing google's service private key google_pk.json and store it in root directory of this project
+    - DropBox_API_KEY: the API KEY for dropbox
+    - username: the user name to access the data in the audio files table
+    - password: username's password
+    
+- Start the proxy server which would link the running django server to the google cloud's MySQL's server
+    - Store google applications's credential in the root directory of this project
+    - Install the proxy server and store it in the root directory of this project
+        - Refer to Installing the Cloud SQL Proxy in the following documentation https://cloud.google.com/sql/docs/mysql/sql-proxy
+    - Run the following
+    ```
+       ./cloud_sql_proxy -instances="nethope-pr-assessment:us-central1:nethopemysql"=tcp:5505 -credential_file="./google_pk.json"
+    ```
+- Start the django server
+    ```
+     python ./src/djangoScr/manage.py runserver
+    ```
+    
+## Current API Features
+TODO
+
 
 ## Current Data Collection Process
 1. Interviewer calls remote interviewee
