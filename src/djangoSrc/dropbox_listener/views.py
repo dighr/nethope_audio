@@ -47,12 +47,6 @@ class Handle:
             dl.download_all_file()
             output_files = dl.get_output_files()
             files = dl.files
-            # output_files = [
-            #  './Downloads/0c20191025150303n+17874154204_0.amr',
-            #  # './Downloads/0c20191023114558n7876302482_0.amr'
-            # ]
-            #
-            # files = output_files
 
             print('starting')
             for index, file in enumerate(output_files):
@@ -84,12 +78,6 @@ class Handle:
 
                 except Exception as e:
                     print(e)
-
-        # count = 0
-        # while self._keep_runnning:
-        #     print("running " + str(count))
-        #     count += 1
-        #     sleep(1)
 
     def save_to_bucket(self, text, file_name, bucket):
         destination_name = os.path.splitext(file_name)[0] + '.txt'

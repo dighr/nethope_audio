@@ -51,9 +51,22 @@ virtualenv env
     
 ## Current API Features
 ###  Starting transcription
-TODO
-
-- 
+To start the process, simply send a put request (http://127.0.0.1:8000/dropboxListener/1/) with attribute listen set to 1 
+![Image description](./images/process-start.PNG)
+This will start the following in the backend
+ - Check if a thread to do the following was already created before. If it was created before, then ignore the request
+ - If it was not created before, create a separate thread and start the following process in it
+    - get all supported audio files (wav, mp3, ) from all the folders of the linked Dropbox account
+    - Check if any of those audio files are already processed before
+    - If any of the files was not processed before, then download and store them in the Downloads folder under ./src/djangoSrc/Downloads
+    - For each downloaded audio file, do the following
+        - Convert the audio file into wav and store the converted file under the tmp folder in ./src/djangoScr
+        - If the audio file is short (less than 60 seconds), then send a transcription request directly to google cloud (Only spanish transcription for now)
+        - If it a large audio file, then upload it to google cloud first in "long_audios_trans" bucket and then send a transcription request referencing the the file path from the backet
+        - When the result is returned, extract the trancription from the returned object, store the result into a file, and then upload the result in a bucket named "audios-transcriptions" in google cloud
+        - Send a request to translate the transcription and store the results in the "audios-translation" bucket in google cloud
+        - extract data from the audio's file name
+        - Store the result into the AudioFile table in Google Cloud's MySql
 
 ### Retrieving Stored Results Data
 - "http://127.0.0.1:8000/audioFiles/" would display all the data in the AudioFiles table stored after 
