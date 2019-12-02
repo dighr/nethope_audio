@@ -50,8 +50,23 @@ virtualenv env
     ```
     
 ## Current API Features
+###  Starting transcription
 TODO
 
+- 
+
+### Retrieving Stored Results Data
+- "http://127.0.0.1:8000/audioFiles/" would display all the data in the AudioFiles table stored after 
+   transcribing the audio files which came from the linked dropbox account. The transcription and translation columns in
+   the response shows the path where the transcription results were stored in a google cloud bucket
+![Image description](./images/displaying-all-data.PNG)
+-  "http://127.0.0.1:8000/audioFiles/{id}" would display the content of the transcription and translation retrieved from 
+     the referenced bucket location of the result with the given id 
+  ![Image description](./images/specific-data.PNG)
+- "http://127.0.0.1:8000/audioFiles?realData" would display the content of the transcription and translation retrieved from 
+     the referenced bucket location of all the data. Takes a long time because it makes a request to get the stored transription result
+      of every entry in the table
+![Image description](./images/displaying-all-real-data.PNG)
 
 ## Current Data Collection Process
 1. Interviewer calls remote interviewee
