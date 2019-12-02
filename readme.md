@@ -78,7 +78,9 @@ This will start the following in the backend
   ![Image description](./images/specific-data.PNG)
 - "http://127.0.0.1:8000/audioFiles?realData" would display the content of the transcription and translation retrieved from 
      the referenced bucket location of all the data. Takes a long time because it makes a request to get the stored transription result
-      of every entry in the table
+      of every entry in the table.Use one of the online services such as "http://convertcsv.com/json-to-csv.htm" to convert 
+      the json response into CSV 
+
 ![Image description](./images/displaying-all-real-data.PNG)
 
 ## Current Data Collection Process
